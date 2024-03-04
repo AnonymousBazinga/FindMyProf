@@ -20,9 +20,15 @@ def getProfName(department, course_number, section):
 
     if instructor_name_element:
         instructor_name = instructor_name_element.find('span', {'class': 'name'}).text.strip()
-        return f"Course Title: {course_title}\nInstructor's name is: {instructor_name}"
+        result = {
+            'course_title': course_title,
+            'instructor_info': f"Instructor's name is: {instructor_name}"
+        }
     else:
-        return "Instructor information not available."
+        result = {'course_title': course_title, 'instructor_info': "Instructor information not available."}
+
+    return result
+
 
 @app.route('/')
 def index():
