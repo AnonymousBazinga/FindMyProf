@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 import requests
 from bs4 import BeautifulSoup
 
@@ -48,6 +48,34 @@ def process():
     result = getProfName(department, course_number, section)
     return render_template('result.html', result=result)
 
+
+def extract_first_last_names(full_name):
+    #convert to a name
+    print("BEFORE: ", full_name, " WITH ", full_name.index(":"))
+    full_name = full_name[full_name.index(":")+1:]
+    print("AFTER: ", full_name)
+
+    # Split the full name by spaces and extract the first and last names
+    names = full_name.split()
+    if len(names) >= 2:
+        first_name = names[0]
+        last_name = names[-1]
+    else:
+        # If there are not enough parts, use the full name
+        first_name = full_name
+        last_name = full_name
+    print("FINAL: ", first_name, last_name)
+    return first_name, last_name
+
+@app.route('/rate_my_professor/<professor_info>')
+def rate_my_professor(professor_info):
+    # Extract first and last names
+    first_name, last_name = extract_first_last_names(professor_info)
+
+    # Open a new tab searching for the first and last names on Rate My Professor
+    search_url = f'https://www.ratemyprofessors.com/search/professors?q={first_name}%20{last_name}'
+    print(search_url)
+    return redirect(search_url)
 
 if __name__ == '__main__':
     app.run(debug=True)
