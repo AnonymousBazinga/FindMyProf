@@ -20,10 +20,13 @@
 <body>
     <div class="container">
         <h2>{{ result.course_title }}</h2>
-        <p>{{ result.instructor_info }}</p>
+        <p>{{ result.instructor_info }}*</p>
         <!-- Updated link to use professor_name as the parameter -->
         <a href="{{ url_for('rate_my_professor', professor_info=result.instructor_info) }}" target="_blank">Rate My Professor</a>
         <a href="/">Go back</a>
     </div>
+    <p class="container2" style="font-size: 14px;">
+        * The information provided on this platform is sourced from the live data available in UW IT Connect's database. <br> While every effort is made to ensure accuracy, discrepancies may occur.
+    </p>
 </body>
 </html>
