@@ -1,0 +1,14 @@
+/* Styles specific to FAQ page */
+.faq-container {
+    padding: 20px;
+}
+
+.faq-question {
+    color: #39275B; /* Purple color for FAQ questions */
+    font-weight: bold;
+    cursor: pointer; /* Change cursor to pointer on hover */
+}
+
+.faq-answer {
+    color: #555; /* Dark gray color for FAQ answers */
+}

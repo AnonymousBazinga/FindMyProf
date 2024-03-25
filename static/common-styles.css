@@ -1,0 +1,19 @@
+/* Common styles for all pages */
+body {
+    font-family: Arial, sans-serif; /* Default font family for all pages */
+    /*font-family: 'Lato', sans-serif;*/
+}
+
+.navbar-custom {
+    background-color: #39275B; /* Purple navbar */
+    padding: 15px 0; /* Adjust padding to increase height */
+}
+
+.navbar-custom .navbar-brand {
+    color: #C79900; /* Gold text color for navbar brand */
+    /* alternatively you can use color #8E632A */
+}
+
+.navbar-custom .navbar-nav .nav-link {
+    color: white; /* White text color for navbar links */
+}

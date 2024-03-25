@@ -20,7 +20,7 @@
 <body>
     <div class="container">
         <h2>{{ result.course_title }}</h2>
-        <p>{{ result.instructor_info }}*</p>
+        <p>The course instructor is: {{ result.instructor_info }}*</p>
         <!-- Updated link to use professor_name as the parameter -->
         <a href="{{ url_for('rate_my_professor', professor_info=result.instructor_info) }}" target="_blank">Rate My Professor</a>
         <a href="/">Go back</a>

@@ -22,10 +22,10 @@ def getProfName(department, course_number, section):
         instructor_name = instructor_name_element.find('span', {'class': 'name'}).text.strip()
         result = {
             'course_title': course_title,
-            'instructor_info': f"Instructor's name is: {instructor_name}"
+            'instructor_info': instructor_name
         }
     else:
-        result = {'course_title': course_title, 'instructor_info': "Instructor information not available."}
+        result = {'course_title': course_title, 'instructor_info': "Instructor information is unavailable."}
 
     return result
 
@@ -34,9 +34,17 @@ def getProfName(department, course_number, section):
 def index():
     return render_template('index.html')
 
+@app.route('/faq')
+def faq():
+    return render_template('faq.html')
+
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
+
 @app.route('/process', methods=['POST'])
 def process():
-    class_info = request.form['class'].split(',')
+    class_info = courseSplitter(request.form['class'])
     section = request.form['section']
     
     # Validate class_info and section or add additional error checking if needed
@@ -48,12 +56,33 @@ def process():
     result = getProfName(department, course_number, section)
     return render_template('result.html', result=result)
 
-
+def courseSplitter(nameOfClass):
+    #Check this - does strip return a value or not?
+    nameOfClass = nameOfClass.strip()
+    print(nameOfClass.find(","))
+    if (nameOfClass.find(",") != -1):
+        print("here")
+        return nameOfClass.split(",")
+    else:
+        pos = -1
+        for i in nameOfClass:
+            pos+=1
+            print(pos)
+            print(i)
+            try:
+                i = int(i)
+            except Exception as e:
+                continue
+            else:
+                break
+        return [nameOfClass[0:pos].strip(), nameOfClass[pos:].strip()]
+    
 def extract_first_last_names(full_name):
-    #convert to a name
-    print("BEFORE: ", full_name, " WITH ", full_name.index(":"))
-    full_name = full_name[full_name.index(":")+1:]
-    print("AFTER: ", full_name)
+    if full_name.find(":") != -1:
+        #convert to a name
+        print("BEFORE: ", full_name, " WITH ", full_name.index(":"))
+        full_name = full_name[full_name.index(":")+1:]
+        print("AFTER: ", full_name)
 
     # Split the full name by spaces and extract the first and last names
     names = full_name.split()
