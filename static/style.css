@@ -1,13 +1,8 @@
 body {
     font-family: 'Lato', sans-serif;
-    background-color: #c19771; /* Beige background */
+    background-color: #c1967182; /* Beige background */
     margin: 0;
     padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    flex-direction: column; 
 }
 
 .container {
@@ -29,6 +24,19 @@ form {
     display: flex;
     flex-direction: column;
 }
+
+.navbar-custom {
+    background-color: #343a40; /* Dark background color for navbar */
+}
+
+.navbar-brand {
+    color: #fff; /* Text color for navbar brand */
+}
+
+.navbar-nav .nav-link {
+    color: #fff; /* Text color for navbar links */
+}
+
 
 label {
     margin-bottom: 10px;
