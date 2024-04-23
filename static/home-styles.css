@@ -1,0 +1,7 @@
+/* Common styles for all pages */
+body {
+    background-image: url('/static/fmuwp-fix.jpeg');
+    background-size:contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}

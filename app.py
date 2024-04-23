@@ -4,8 +4,8 @@ from bs4 import BeautifulSoup
 
 app = Flask(__name__, static_url_path='/static')
 
-def getProfName(department, course_number, section):
-    url = f'https://ws.admin.washington.edu/student/v5/course/2024,summer,{department},{course_number}/{section}'
+def getProfName(department, course_number, section, term):
+    url = f'https://ws.admin.washington.edu/student/v5/course/2024,{term},{department},{course_number}/{section}'
     headers = {'Authorization': 'Bearer 7F3A58DB-4847-44B9-85B3-E73CE883E974'}
 
     # Make the API call
@@ -46,6 +46,7 @@ def contact():
 def process():
     class_info = courseSplitter(request.form['class'])
     section = request.form['section']
+    term = request.form['term']
 
     # Validate class_info and section or add additional error checking if needed
     if len(class_info) != 2 or not section:
@@ -53,22 +54,19 @@ def process():
         return render_template('index.html', error_message=error_message)
 
     department, course_number = class_info
-    result = getProfName(department, course_number, section)
+    result = getProfName(department, course_number, section, term)
     return render_template('result.html', result=result)
 
 def courseSplitter(nameOfClass):
     #Check this - does strip return a value or not?
     nameOfClass = nameOfClass.strip()
-    print(nameOfClass.find(","))
     if (nameOfClass.find(",") != -1):
-        print("here")
         return nameOfClass.split(",")
     else:
         pos = -1
         for i in nameOfClass:
             pos+=1
-            print(pos)
-            print(i)
+
             try:
                 i = int(i)
             except Exception as e:
@@ -80,9 +78,7 @@ def courseSplitter(nameOfClass):
 def extract_first_last_names(full_name):
     if full_name.find(":") != -1:
         #convert to a name
-        print("BEFORE: ", full_name, " WITH ", full_name.index(":"))
         full_name = full_name[full_name.index(":")+1:]
-        print("AFTER: ", full_name)
 
     # Split the full name by spaces and extract the first and last names
     names = full_name.split()
@@ -93,7 +89,6 @@ def extract_first_last_names(full_name):
         # If there are not enough parts, use the full name
         first_name = full_name
         last_name = full_name
-    print("FINAL: ", first_name, last_name)
     return first_name, last_name
 
 @app.route('/rate_my_professor/<professor_info>')
