@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 app = Flask(__name__, static_url_path='/static')
 
 def getProfName(department, course_number, section):
-    url = f'https://ws.admin.washington.edu/student/v5/course/2024,spring,{department},{course_number}/{section}'
+    url = f'https://ws.admin.washington.edu/student/v5/course/2024,summer,{department},{course_number}/{section}'
     headers = {'Authorization': 'Bearer 7F3A58DB-4847-44B9-85B3-E73CE883E974'}
 
     # Make the API call
@@ -46,7 +46,7 @@ def contact():
 def process():
     class_info = courseSplitter(request.form['class'])
     section = request.form['section']
-    
+
     # Validate class_info and section or add additional error checking if needed
     if len(class_info) != 2 or not section:
         error_message = "Please enter a valid class in the format 'DEPARTMENT,COURSE_NUMBER' and provide a section."
@@ -76,7 +76,7 @@ def courseSplitter(nameOfClass):
             else:
                 break
         return [nameOfClass[0:pos].strip(), nameOfClass[pos:].strip()]
-    
+
 def extract_first_last_names(full_name):
     if full_name.find(":") != -1:
         #convert to a name
