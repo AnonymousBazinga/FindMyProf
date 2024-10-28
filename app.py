@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 app = Flask(__name__, static_url_path='/static')
 
 def getProfName(department, course_number, section):
-    url = f'https://ws.admin.washington.edu/student/v5/course/2024,winter,{department},{course_number}/{section}'
+    url = f'https://ws.admin.washington.edu/student/v5/course/2025,winter,{department},{course_number}/{section}'
     headers = {'Authorization': 'Bearer 9919BCA8-9DCC-4BEC-B3F3-E0EFDE2F608E'}
 
     # Make the API call
