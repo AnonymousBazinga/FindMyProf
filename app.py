@@ -4,9 +4,9 @@ from bs4 import BeautifulSoup
 
 app = Flask(__name__, static_url_path='/static')
 
-def getProfName(department, course_number, section, term):
-    url = f'https://ws.admin.washington.edu/student/v5/course/2024,{term},{department},{course_number}/{section}'
-    headers = {'Authorization': 'Bearer 7F3A58DB-4847-44B9-85B3-E73CE883E974'}
+def getProfName(department, course_number, section):
+    url = f'https://ws.admin.washington.edu/student/v5/course/2024,winter,{department},{course_number}/{section}'
+    headers = {'Authorization': 'Bearer 9919BCA8-9DCC-4BEC-B3F3-E0EFDE2F608E'}
 
     # Make the API call
     response = requests.get(url, headers=headers)
@@ -46,7 +46,7 @@ def contact():
 def process():
     class_info = courseSplitter(request.form['class'])
     section = request.form['section']
-    term = request.form['term']
+    # term = request.form['term']
 
     # Validate class_info and section or add additional error checking if needed
     if len(class_info) != 2 or not section:
@@ -54,7 +54,7 @@ def process():
         return render_template('index.html', error_message=error_message)
 
     department, course_number = class_info
-    result = getProfName(department, course_number, section, term)
+    result = getProfName(department, course_number, section)
     return render_template('result.html', result=result)
 
 def courseSplitter(nameOfClass):
